@@ -1,26 +1,57 @@
-import React from "react";
+import React, { useState } from 'react';
+import './index.css';
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
 
-//create your first component
-const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+  const handleAddTask = () => {
+    if (newTask.trim() !== '') {
+      setTasks([...tasks, newTask]);
+      setNewTask('');
+    }
+  };
 
-export default Home;
+  const handleDeleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
+  return (
+    <div className="App">
+      <div className="todo-container">
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Add a task"
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleAddTask();
+            }
+          }}
+        />
+        <button onClick={handleAddTask}>Add</button>
+        {tasks.length === 0 ? (
+          <div className="no-tasks">No tasks, add a task</div>
+        ) : (
+          <ul>
+            {tasks.map((task, index) => (
+              <li key={index} onMouseEnter={() => handleDeleteTask(index)}>
+                {task}
+                <span
+                  className="delete-icon"
+                  onClick={() => handleDeleteTask(index)}
+                >
+                  &#10006;
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default App;
