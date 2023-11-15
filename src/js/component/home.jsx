@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './index.css';
+// import './../styles/index.css'; // Import the provided CSS file
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -20,12 +20,13 @@ function App() {
   return (
     <div className="App">
       <div className="todo-container">
+        <h1>To Do's</h1>
         <input
           type="text"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
           placeholder="Add a task"
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleAddTask();
             }
@@ -37,7 +38,7 @@ function App() {
         ) : (
           <ul>
             {tasks.map((task, index) => (
-              <li key={index} onMouseEnter={() => handleDeleteTask(index)}>
+              <li key={index} onMousePress={() => handleDeleteTask(index)}>
                 {task}
                 <span
                   className="delete-icon"
@@ -47,6 +48,7 @@ function App() {
                 </span>
               </li>
             ))}
+            <div className='task-length'> items left {tasks.length}</div>
           </ul>
         )}
       </div>
