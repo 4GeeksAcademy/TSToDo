@@ -32,6 +32,7 @@ function App() {
             }
           }}
         />
+      <div>  
         <button onClick={handleAddTask}>Add</button>
         {tasks.length === 0 ? (
           <div className="no-tasks">No tasks, add a task</div>
@@ -51,6 +52,7 @@ function App() {
             <div className='task-length'> items left {tasks.length}</div>
           </ul>
         )}
+      </div>  
       </div>
     </div>
   );
